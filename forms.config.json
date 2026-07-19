@@ -1,0 +1,56 @@
+{
+  "_instrucoes": "COMO EDITAR: 1) Troque nomes das equipes e cores se precisar. 2) Em cada form, coloque titulo curto e o link do Google Form (prefira link longo: abra o forms.gle no navegador e copie a URL final, formato docs.google.com/forms/d/e/.../viewform). 3) 'formsComuns' aparecem para todas as equipes. 4) 'abrirFora': true = form abre em nova aba (obrigatorio para forms com upload de arquivo, que exigem login Google e nao funcionam embutidos). 5) Nao mude os 'id' depois que o site estiver publicado. 6) Salve — o site atualiza sozinho, sem mexer no index.html.",
+  "titulo": "Central de Formulários — House Imob Caucaia",
+  "equipes": [
+    {
+      "id": "fenix",
+      "nome": "Equipe Fênix",
+      "cor": "#E11D48",
+      "forms": [
+        {
+          "titulo": "Subir documentações",
+          "url": "https://docs.google.com/forms/d/e/1FAIpQLSdZJQJHZ0oGYb-0N9ate82pw7t4gjEAdqVNrLXubWdHZ6Lq_A/viewform",
+          "abrirFora": true
+        }
+      ]
+    },
+    {
+      "id": "falcon",
+      "nome": "Equipe Falcon",
+      "cor": "#F59E0B",
+      "forms": [
+        {
+          "titulo": "Subir documentações",
+          "url": "https://docs.google.com/forms/d/e/1FAIpQLSfKfChoiIBduEGe878jRpJt6rSu_DHRco9OtiSxgopqPL63xg/viewform",
+          "abrirFora": true
+        }
+      ]
+    },
+    {
+      "id": "aguias",
+      "nome": "Equipe Águias",
+      "cor": "#2563EB",
+      "forms": [
+        {
+          "titulo": "Subir documentações",
+          "url": "https://docs.google.com/forms/d/e/1FAIpQLSeRP7BxaffLkPyJlvB1eQC0m3iBZc6JxZyMRqixe_9HT9np-g/viewform",
+          "abrirFora": true
+        }
+      ]
+    }
+  ],
+  "formsComuns": [
+    {
+      "titulo": "Coleta de resultados diários",
+      "url": "https://docs.google.com/forms/d/e/1FAIpQLSfzh3cUZyiBFmgftgSYeMGBvxomnHYM4bEINlfKc6mmS0L4Ng/viewform"
+    },
+    {
+      "titulo": "Ficha de agendamentos",
+      "url": "https://docs.google.com/forms/d/e/1FAIpQLSdaMBT-sFlIib3V8SH1SS_urn7UE5ytp80QIt85bAnV2f4JQA/viewform"
+    },
+    {
+      "titulo": "Ficha de visita",
+      "url": "https://docs.google.com/forms/d/e/1FAIpQLScLivI_C9Y2hIWmsEuGrDAfyftTBEtR9Ec372BdDifup-lVIw/viewform"
+    }
+  ]
+}

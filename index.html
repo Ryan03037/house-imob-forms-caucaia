@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Central de Formulários — House Imob Caucaia</title>
+<style>
+  :root {
+    --bg: #0F1115;
+    --card: #1A1D24;
+    --text: #F5F5F5;
+    --text-sec: #9CA3AF;
+    --border: #2A2E37;
+    --green: #22C55E;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, 'Segoe UI', Roboto, sans-serif;
+    /* impede scroll horizontal em qualquer viewport */
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #app-root {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  #screen-content {
+    flex: 1;
+    width: 100%;
+  }
+
+  button {
+    font-family: inherit;
+    color: inherit;
+  }
+
+  a {
+    color: #60A5FA;
+  }
+
+  .hidden { display: none !important; }
+
+  /* ---------- Carregando / Erro ---------- */
+
+  .status-screen {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+    text-align: center;
+    gap: 16px;
+  }
+
+  .spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid var(--border);
+    border-top-color: #60A5FA;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .status-text {
+    color: var(--text-sec);
+    font-size: 15px;
+    max-width: 320px;
+    line-height: 1.5;
+  }
+
+  .status-text.error {
+    color: #F87171;
+  }
+
+  /* ---------- Layout geral ---------- */
+
+  footer.rodape {
+    text-align: center;
+    color: var(--text-sec);
+    font-size: 12px;
+    padding: 20px 16px 28px;
+  }
+
+  /* ---------- Tela 1: seleção de equipe ---------- */
+
+  .home-header {
+    padding: 28px 20px 8px;
+    text-align: left;
+  }
+
+  .home-header h1 {
+    font-size: 22px;
+    margin: 0 0 6px;
+    line-height: 1.3;
+  }
+
+  .home-header p {
+    margin: 0;
+    color: var(--text-sec);
+    font-size: 14px;
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 16px 20px 24px;
+  }
+
+  @media (min-width: 768px) {
+    .team-grid {
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+  }
+
+  .team-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 72px;
+    width: 100%;
+    background: var(--card);
+    border: none;
+    border-left: 4px solid var(--team-color, #60A5FA);
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: left;
+    cursor: pointer;
+    gap: 4px;
+  }
+
+  .team-card:active {
+    background: #21252e;
+  }
+
+  .team-card .team-name {
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  .team-card .team-count {
+    font-size: 13px;
+    color: var(--text-sec);
+  }
+
+  /* ---------- Tela 2: forms da equipe ---------- */
+
+  .team-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .team-header .team-header-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--team-color, #F5F5F5);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .btn-trocar {
+    flex-shrink: 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    min-height: 44px;
+    cursor: pointer;
+  }
+
+  .btn-trocar:active {
+    background: #21252e;
+  }
+
+  .acc-list {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .acc-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-sec);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 10px 0 2px;
+  }
+
+  .acc-divider::before,
+  .acc-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .acc-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .acc-header-row {
+    display: flex;
+    align-items: stretch;
+  }
+
+  .acc-toggle {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background: transparent;
+    border: none;
+    padding: 14px 12px;
+    min-height: 44px;
+    font-size: 15px;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .acc-title {
+    flex: 1;
+    line-height: 1.35;
+  }
+
+  .acc-item.done .acc-title {
+    opacity: 0.55;
+  }
+
+  .acc-check-mark {
+    color: var(--green);
+    font-weight: 700;
+    margin-right: 6px;
+  }
+
+  .acc-chevron {
+    color: var(--text-sec);
+    font-size: 13px;
+    transition: transform 0.15s ease;
+    flex-shrink: 0;
+  }
+
+  .acc-toggle[aria-expanded="true"] .acc-chevron {
+    transform: rotate(180deg);
+  }
+
+  .acc-check-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 12px;
+    min-width: 44px;
+  }
+
+  .acc-checkbox {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--green);
+    cursor: pointer;
+  }
+
+  .acc-panel {
+    border-top: 1px solid var(--border);
+    padding: 12px;
+  }
+
+  /* Item que abre em nova aba (forms com upload/login — não embutem) */
+  .acc-external-link {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 14px 12px;
+    min-height: 44px;
+    font-size: 15px;
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  .acc-external-link .acc-ext-hint {
+    flex-shrink: 0;
+    color: var(--text-sec);
+    font-size: 12px;
+  }
+
+  .acc-fallback-link {
+    display: inline-block;
+    margin-bottom: 10px;
+    font-size: 13px;
+  }
+
+  .iframe-wrap {
+    width: 100%;
+    height: 80vh;
+    min-height: 520px;
+    background: #05060a;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .iframe-wrap iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+  <div id="loading-screen" class="status-screen">
+    <div class="spinner" aria-hidden="true"></div>
+    <p class="status-text">Carregando…</p>
+  </div>
+
+  <div id="error-screen" class="status-screen hidden">
+    <p class="status-text error">Não foi possível carregar os formulários. Abra pelo link oficial ou avise o gestor.</p>
+  </div>
+
+  <div id="app-root" class="hidden">
+    <div id="screen-content"></div>
+    <footer class="rodape">House Imob Caucaia</footer>
+  </div>
+
+  <script>
+  (function () {
+    'use strict';
+
+    var CONFIG_URL = 'forms.config.json';
+    var STORAGE_EQUIPE = 'caucaia.equipe';
+    var STORAGE_PREENCHIDOS_PREFIX = 'caucaia.preenchidos.';
+
+    var loadingScreen = document.getElementById('loading-screen');
+    var errorScreen = document.getElementById('error-screen');
+    var appRoot = document.getElementById('app-root');
+    var screenContent = document.getElementById('screen-content');
+
+    var CONFIG = null;
+
+    // ---------- Utilidades de data / localStorage ----------
+
+    function getTodayStr() {
+      // Fuso America/Fortaleza, formato ISO YYYY-MM-DD (sv-SE formata assim).
+      return new Date().toLocaleDateString('sv-SE', { timeZone: 'America/Fortaleza' });
+    }
+
+    function getTodayPreenchidosKey() {
+      return STORAGE_PREENCHIDOS_PREFIX + getTodayStr();
+    }
+
+    function cleanupOldPreenchidos() {
+      var todayKey = getTodayPreenchidosKey();
+      var toRemove = [];
+      for (var i = 0; i < localStorage.length; i++) {
+        var k = localStorage.key(i);
+        if (k && k.indexOf(STORAGE_PREENCHIDOS_PREFIX) === 0 && k !== todayKey) {
+          toRemove.push(k);
+        }
+      }
+      toRemove.forEach(function (k) { localStorage.removeItem(k); });
+    }
+
+    function getPreenchidosSet() {
+      try {
+        var raw = localStorage.getItem(getTodayPreenchidosKey());
+        return raw ? new Set(JSON.parse(raw)) : new Set();
+      } catch (e) {
+        return new Set();
+      }
+    }
+
+    function setPreenchido(key, checked) {
+      var set = getPreenchidosSet();
+      if (checked) { set.add(key); } else { set.delete(key); }
+      localStorage.setItem(getTodayPreenchidosKey(), JSON.stringify(Array.from(set)));
+    }
+
+    // ---------- Embed de Google Forms ----------
+
+    function toEmbedUrl(url) {
+      try {
+        var u = new URL(url);
+        u.searchParams.set('embedded', 'true');
+        return u.toString();
+      } catch (e) {
+        // URL inválida — devolve como veio, o link de fallback ainda funciona.
+        return url;
+      }
+    }
+
+    // ---------- Helpers de config ----------
+
+    function findEquipe(id) {
+      if (!CONFIG || !CONFIG.equipes) { return null; }
+      for (var i = 0; i < CONFIG.equipes.length; i++) {
+        if (CONFIG.equipes[i].id === id) { return CONFIG.equipes[i]; }
+      }
+      return null;
+    }
+
+    function getHashEquipeId() {
+      var h = (window.location.hash || '').replace(/^#/, '');
+      return h || null;
+    }
+
+    function formatCount(n) {
+      return n === 1 ? '1 formulário' : (n + ' formulários');
+    }
+
+    // ---------- Tela 1: seleção de equipe ----------
+
+    function renderHomeScreen() {
+      var comuns = CONFIG.formsComuns || [];
+      var html = '';
+      html += '<div class="home-header">';
+      html += '<h1>' + escapeHtml(CONFIG.titulo || 'Central de Formulários') + '</h1>';
+      html += '<p>Todos os formulários da sua equipe em um só lugar.</p>';
+      html += '</div>';
+      html += '<div class="team-grid">';
+      (CONFIG.equipes || []).forEach(function (eq) {
+        var total = (eq.forms ? eq.forms.length : 0) + comuns.length;
+        html += '<button type="button" class="team-card" style="--team-color:' + escapeAttr(eq.cor || '#60A5FA') + '" data-equipe-id="' + escapeAttr(eq.id) + '">' +
+          '<span class="team-name">' + escapeHtml(eq.nome) + '</span>' +
+          '<span class="team-count">' + formatCount(total) + '</span>' +
+          '</button>';
+      });
+      html += '</div>';
+
+      screenContent.innerHTML = html;
+
+      screenContent.querySelectorAll('.team-card').forEach(function (card) {
+        card.addEventListener('click', function () {
+          var id = card.getAttribute('data-equipe-id');
+          selectEquipe(id, true);
+        });
+      });
+    }
+
+    function selectEquipe(id, updateHash) {
+      localStorage.setItem(STORAGE_EQUIPE, id);
+      if (updateHash) {
+        window.location.hash = id;
+      }
+      renderTeamScreen(id);
+    }
+
+    function trocarEquipe() {
+      localStorage.removeItem(STORAGE_EQUIPE);
+      // Limpa o hash sem recarregar a página.
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+      renderHomeScreen();
+    }
+
+    // ---------- Tela 2: forms da equipe (accordion) ----------
+
+    function buildFormItemHtml(key, titulo, url, preenchidosSet, abrirFora) {
+      var isDone = preenchidosSet.has(key);
+      var panelId = 'panel-' + key.replace(/[^a-zA-Z0-9_-]/g, '_');
+
+      if (abrirFora) {
+        // Forms com upload de arquivo exigem login Google e não funcionam em iframe.
+        return (
+          '<div class="acc-item' + (isDone ? ' done' : '') + '" data-key="' + escapeAttr(key) + '">' +
+            '<div class="acc-header-row">' +
+              '<a class="acc-external-link" href="' + escapeAttr(url) + '" target="_blank" rel="noopener">' +
+                '<span class="acc-title">' + (isDone ? '<span class="acc-check-mark">✓</span>' : '') + escapeHtml(titulo) + '</span>' +
+                '<span class="acc-ext-hint">abre em nova aba ↗</span>' +
+              '</a>' +
+              '<span class="acc-check-wrap">' +
+                '<input type="checkbox" class="acc-checkbox" aria-label="Marcar ' + escapeAttr(titulo) + ' como preenchido hoje"' + (isDone ? ' checked' : '') + '>' +
+              '</span>' +
+            '</div>' +
+          '</div>'
+        );
+      }
+
+      return (
+        '<div class="acc-item' + (isDone ? ' done' : '') + '" data-key="' + escapeAttr(key) + '" data-url="' + escapeAttr(url) + '">' +
+          '<div class="acc-header-row">' +
+            '<button type="button" class="acc-toggle" aria-expanded="false" aria-controls="' + panelId + '">' +
+              '<span class="acc-title">' + (isDone ? '<span class="acc-check-mark">✓</span>' : '') + escapeHtml(titulo) + '</span>' +
+              '<span class="acc-chevron" aria-hidden="true">▾</span>' +
+            '</button>' +
+            '<span class="acc-check-wrap">' +
+              '<input type="checkbox" class="acc-checkbox" aria-label="Marcar ' + escapeAttr(titulo) + ' como preenchido hoje"' + (isDone ? ' checked' : '') + '>' +
+            '</span>' +
+          '</div>' +
+          '<div id="' + panelId + '" class="acc-panel" hidden>' +
+            '<a class="acc-fallback-link" href="' + escapeAttr(url) + '" target="_blank" rel="noopener">Abrir no Google Forms ↗</a>' +
+            '<div class="iframe-wrap"></div>' +
+          '</div>' +
+        '</div>'
+      );
+    }
+
+    function renderTeamScreen(equipeId) {
+      var equipe = findEquipe(equipeId);
+      if (!equipe) {
+        // id inválido (renomeado/removido do config) — volta pra seleção.
+        localStorage.removeItem(STORAGE_EQUIPE);
+        renderHomeScreen();
+        return;
+      }
+
+      var preenchidosSet = getPreenchidosSet();
+      var comuns = CONFIG.formsComuns || [];
+
+      var html = '';
+      html += '<div class="team-header" style="--team-color:' + escapeAttr(equipe.cor || '#F5F5F5') + '">' +
+        '<span class="team-header-name">' + escapeHtml(equipe.nome) + '</span>' +
+        '<button type="button" class="btn-trocar" id="btn-trocar-equipe">Trocar equipe</button>' +
+        '</div>';
+
+      // Forms comuns primeiro (uso diário), depois os específicos da equipe.
+      html += '<div class="acc-list">';
+      comuns.forEach(function (form, idx) {
+        var key = 'comum::' + idx;
+        html += buildFormItemHtml(key, form.titulo, form.url, preenchidosSet, form.abrirFora);
+      });
+
+      if ((equipe.forms || []).length) {
+        html += '<div class="acc-divider">' + escapeHtml(equipe.nome) + '</div>';
+        equipe.forms.forEach(function (form, idx) {
+          var key = equipe.id + '::' + idx;
+          html += buildFormItemHtml(key, form.titulo, form.url, preenchidosSet, form.abrirFora);
+        });
+      }
+      html += '</div>';
+
+      screenContent.innerHTML = html;
+
+      document.getElementById('btn-trocar-equipe').addEventListener('click', trocarEquipe);
+      wireAccordion();
+    }
+
+    function wireAccordion() {
+      var items = Array.prototype.slice.call(screenContent.querySelectorAll('.acc-item'));
+
+      items.forEach(function (item) {
+        var toggle = item.querySelector('.acc-toggle');
+        var panel = item.querySelector('.acc-panel');
+        var checkbox = item.querySelector('.acc-checkbox');
+        var key = item.getAttribute('data-key');
+        var url = item.getAttribute('data-url');
+
+        // Itens "abrirFora" não têm toggle/panel — só o checkbox precisa de wiring.
+        if (toggle && panel) {
+          toggle.addEventListener('click', function () {
+            var isOpen = toggle.getAttribute('aria-expanded') === 'true';
+
+            // Accordion: fecha os outros (mas mantém iframes já montados no DOM).
+            items.forEach(function (other) {
+              if (other === item) { return; }
+              var otherToggle = other.querySelector('.acc-toggle');
+              var otherPanel = other.querySelector('.acc-panel');
+              if (otherToggle) { otherToggle.setAttribute('aria-expanded', 'false'); }
+              if (otherPanel) { otherPanel.hidden = true; }
+            });
+
+            if (isOpen) {
+              toggle.setAttribute('aria-expanded', 'false');
+              panel.hidden = true;
+            } else {
+              toggle.setAttribute('aria-expanded', 'true');
+              panel.hidden = false;
+              ensureIframe(panel, url, item.getAttribute('data-key'));
+            }
+          });
+        }
+
+        checkbox.addEventListener('change', function () {
+          setPreenchido(key, checkbox.checked);
+          item.classList.toggle('done', checkbox.checked);
+          var titleEl = item.querySelector('.acc-title');
+          var mark = titleEl.querySelector('.acc-check-mark');
+          if (checkbox.checked && !mark) {
+            titleEl.insertAdjacentHTML('afterbegin', '<span class="acc-check-mark">✓</span>');
+          } else if (!checkbox.checked && mark) {
+            mark.remove();
+          }
+        });
+      });
+    }
+
+    function ensureIframe(panel, url, key) {
+      var wrap = panel.querySelector('.iframe-wrap');
+      if (wrap.querySelector('iframe')) { return; }
+      var iframe = document.createElement('iframe');
+      iframe.src = toEmbedUrl(url);
+      iframe.setAttribute('loading', 'lazy');
+      iframe.setAttribute('frameborder', '0');
+      iframe.title = 'Formulário: ' + key;
+      wrap.appendChild(iframe);
+    }
+
+    // ---------- Escaping simples (config é confiável, mas evita quebrar o HTML) ----------
+
+    function escapeHtml(str) {
+      return String(str == null ? '' : str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function escapeAttr(str) {
+      return escapeHtml(str).replace(/"/g, '&quot;');
+    }
+
+    // ---------- Boot ----------
+
+    function boot() {
+      cleanupOldPreenchidos();
+
+      fetch(CONFIG_URL, { cache: 'no-store' })
+        .then(function (res) {
+          if (!res.ok) { throw new Error('HTTP ' + res.status); }
+          return res.json();
+        })
+        .then(function (data) {
+          CONFIG = data;
+          loadingScreen.classList.add('hidden');
+          appRoot.classList.remove('hidden');
+
+          var hashId = getHashEquipeId();
+          var savedId = localStorage.getItem(STORAGE_EQUIPE);
+
+          if (hashId && findEquipe(hashId)) {
+            // Hash vence localStorage — e também vira a preferência salva.
+            localStorage.setItem(STORAGE_EQUIPE, hashId);
+            renderTeamScreen(hashId);
+          } else if (savedId && findEquipe(savedId)) {
+            renderTeamScreen(savedId);
+          } else {
+            renderHomeScreen();
+          }
+        })
+        .catch(function () {
+          loadingScreen.classList.add('hidden');
+          errorScreen.classList.remove('hidden');
+        });
+    }
+
+    boot();
+  })();
+  </script>
+</body>
+</html>
