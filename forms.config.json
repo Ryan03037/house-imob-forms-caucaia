@@ -1,5 +1,5 @@
 {
-  "_instrucoes": "COMO EDITAR: 1) Troque nomes das equipes e cores se precisar. 2) Em cada form, coloque titulo curto e o link do Google Form (prefira link longo: abra o forms.gle no navegador e copie a URL final, formato docs.google.com/forms/d/e/.../viewform). 3) 'formsComuns' aparecem para todas as equipes. 4) 'abrirFora': true = form abre em nova aba (obrigatorio para forms com upload de arquivo, que exigem login Google e nao funcionam embutidos). 5) Nao mude os 'id' depois que o site estiver publicado. 6) Salve — o site atualiza sozinho, sem mexer no index.html.",
+  "_instrucoes": "COMO EDITAR: 1) Troque nomes das equipes e cores se precisar. 2) Em cada form, coloque titulo curto e o link do Google Form (prefira link longo: abra o forms.gle no navegador e copie a URL final, formato docs.google.com/forms/d/e/.../viewform). 3) 'formsComuns' aparecem para todas as equipes. 4) 'abrirFora': true = form abre em nova aba (obrigatorio para forms com upload de arquivo, que exigem login Google e nao funcionam embutidos). 5) 'obrigatorio': true = mostra aviso vermelho no topo ate o corretor enviar o form naquele dia (so usar em forms de pagina unica, sem botao Proxima). 6) Nao mude os 'id' depois que o site estiver publicado. 7) Salve — o site atualiza sozinho, sem mexer no index.html.",
   "titulo": "Central de Formulários — House Imob Caucaia",
   "equipes": [
     {
@@ -42,7 +42,8 @@
   "formsComuns": [
     {
       "titulo": "Coleta de resultados diários",
-      "url": "https://docs.google.com/forms/d/e/1FAIpQLSfzh3cUZyiBFmgftgSYeMGBvxomnHYM4bEINlfKc6mmS0L4Ng/viewform"
+      "url": "https://docs.google.com/forms/d/e/1FAIpQLSfzh3cUZyiBFmgftgSYeMGBvxomnHYM4bEINlfKc6mmS0L4Ng/viewform",
+      "obrigatorio": true
     },
     {
       "titulo": "Ficha de agendamentos",

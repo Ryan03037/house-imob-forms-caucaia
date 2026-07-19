@@ -304,6 +304,42 @@
     padding: 12px;
   }
 
+  /* Aviso de form obrigatório do dia */
+  .aviso-obrigatorio {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: calc(100% - 32px);
+    margin: 12px 16px 0;
+    background: #2A1215;
+    border: 1px solid #7F1D1D;
+    border-left: 4px solid #EF4444;
+    border-radius: 10px;
+    padding: 12px 14px;
+    min-height: 44px;
+    font-size: 14px;
+    line-height: 1.4;
+    text-align: left;
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  .aviso-obrigatorio:active {
+    background: #351619;
+  }
+
+  .aviso-obrigatorio .aviso-icone {
+    flex-shrink: 0;
+    font-size: 18px;
+  }
+
+  .aviso-obrigatorio .aviso-sub {
+    display: block;
+    color: #FCA5A5;
+    font-size: 12px;
+    margin-top: 2px;
+  }
+
   /* Item que abre em nova aba (forms com upload/login — não embutem) */
   .acc-external-link {
     flex: 1;
@@ -546,11 +582,22 @@
       var preenchidosSet = getPreenchidosSet();
       var comuns = CONFIG.formsComuns || [];
 
+      // Contexto dos forms da tela atual (usado pelo aviso de obrigatórios).
+      currentFormsCtx = [];
+      comuns.forEach(function (form, idx) {
+        currentFormsCtx.push({ key: 'comum::' + idx, titulo: form.titulo, obrigatorio: !!form.obrigatorio });
+      });
+      (equipe.forms || []).forEach(function (form, idx) {
+        currentFormsCtx.push({ key: equipe.id + '::' + idx, titulo: form.titulo, obrigatorio: !!form.obrigatorio });
+      });
+
       var html = '';
       html += '<div class="team-header" style="--team-color:' + escapeAttr(equipe.cor || '#F5F5F5') + '">' +
         '<span class="team-header-name">' + escapeHtml(equipe.nome) + '</span>' +
         '<button type="button" class="btn-trocar" id="btn-trocar-equipe">Trocar equipe</button>' +
         '</div>';
+
+      html += '<button type="button" class="aviso-obrigatorio hidden" id="aviso-obrigatorio"></button>';
 
       // Forms comuns primeiro (uso diário), depois os específicos da equipe.
       html += '<div class="acc-list">';
@@ -572,6 +619,67 @@
 
       document.getElementById('btn-trocar-equipe').addEventListener('click', trocarEquipe);
       wireAccordion();
+      wireAvisoObrigatorio();
+      refreshAvisoObrigatorio();
+    }
+
+    // ---------- Aviso de forms obrigatórios do dia ----------
+
+    var currentFormsCtx = [];
+
+    function getObrigatoriosPendentes() {
+      var set = getPreenchidosSet();
+      return currentFormsCtx.filter(function (f) {
+        return f.obrigatorio && !set.has(f.key);
+      });
+    }
+
+    function refreshAvisoObrigatorio() {
+      var aviso = document.getElementById('aviso-obrigatorio');
+      if (!aviso) { return; }
+      var pendentes = getObrigatoriosPendentes();
+      if (!pendentes.length) {
+        aviso.classList.add('hidden');
+        return;
+      }
+      var titulos = pendentes.map(function (f) { return f.titulo; }).join(', ');
+      aviso.innerHTML =
+        '<span class="aviso-icone" aria-hidden="true">⚠️</span>' +
+        '<span>Obrigatório antes de sair da imobiliária: <strong>' + escapeHtml(titulos) + '</strong>' +
+        '<span class="aviso-sub">O aviso some sozinho quando você enviar. Toque aqui para preencher.</span></span>';
+      aviso.setAttribute('data-target-key', pendentes[0].key);
+      aviso.classList.remove('hidden');
+    }
+
+    function wireAvisoObrigatorio() {
+      var aviso = document.getElementById('aviso-obrigatorio');
+      if (!aviso) { return; }
+      aviso.addEventListener('click', function () {
+        var key = aviso.getAttribute('data-target-key');
+        var item = screenContent.querySelector('.acc-item[data-key="' + key + '"]');
+        if (!item) { return; }
+        var toggle = item.querySelector('.acc-toggle');
+        if (toggle && toggle.getAttribute('aria-expanded') !== 'true') {
+          toggle.click();
+        }
+        item.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+
+    // Atualiza visual do item (✓, opacidade, checkbox) + storage + aviso.
+    function marcarPreenchido(item, key, checked) {
+      setPreenchido(key, checked);
+      item.classList.toggle('done', checked);
+      var checkbox = item.querySelector('.acc-checkbox');
+      if (checkbox) { checkbox.checked = checked; }
+      var titleEl = item.querySelector('.acc-title');
+      var mark = titleEl.querySelector('.acc-check-mark');
+      if (checked && !mark) {
+        titleEl.insertAdjacentHTML('afterbegin', '<span class="acc-check-mark">✓</span>');
+      } else if (!checked && mark) {
+        mark.remove();
+      }
+      refreshAvisoObrigatorio();
     }
 
     function wireAccordion() {
@@ -610,15 +718,7 @@
         }
 
         checkbox.addEventListener('change', function () {
-          setPreenchido(key, checkbox.checked);
-          item.classList.toggle('done', checkbox.checked);
-          var titleEl = item.querySelector('.acc-title');
-          var mark = titleEl.querySelector('.acc-check-mark');
-          if (checkbox.checked && !mark) {
-            titleEl.insertAdjacentHTML('afterbegin', '<span class="acc-check-mark">✓</span>');
-          } else if (!checkbox.checked && mark) {
-            mark.remove();
-          }
+          marcarPreenchido(item, key, checkbox.checked);
         });
       });
     }
@@ -631,6 +731,20 @@
       iframe.setAttribute('loading', 'lazy');
       iframe.setAttribute('frameborder', '0');
       iframe.title = 'Formulário: ' + key;
+
+      // Detecção de envio: em forms de página única, o 1º load é o form e o
+      // 2º é a tela de confirmação pós-envio → marca "preenchido" sozinho.
+      // (Forms com seções/botão "Próxima" recarregam por seção e dariam falso
+      // positivo — os forms atuais são todos de página única, verificado.)
+      var loadCount = 0;
+      iframe.addEventListener('load', function () {
+        loadCount++;
+        if (loadCount >= 2) {
+          var item = panel.closest('.acc-item');
+          if (item) { marcarPreenchido(item, key, true); }
+        }
+      });
+
       wrap.appendChild(iframe);
     }
 

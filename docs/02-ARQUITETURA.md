@@ -53,6 +53,13 @@ Regras:
 - `cor`: cor de destaque da equipe (cards e cabeçalho).
 - `formsComuns`: exibidos para toda equipe (atende RF9). **Ordem na tela** (revisado 2026-07-19 com os forms reais): comuns primeiro — são os de uso diário —, depois divisor com o nome da equipe e os forms específicos.
 - `abrirFora: true` (por form): renderiza o item como **link que abre em nova aba**, sem iframe (checkbox "preenchi hoje" mantido). Obrigatório para forms com **upload de arquivo**: o Google exige login nesses forms (respondem 401 no embed) e bloqueia a tela de login dentro de iframe. Verificado em 2026-07-19 — os 3 forms de "Subir documentações" caem nesse caso.
+- `obrigatorio: true` (por form): mostra **aviso vermelho fixo no topo da tela da equipe** ("Obrigatório antes de sair da imobiliária: …") até o form ser marcado como preenchido no dia. Tocar no aviso abre e rola até o form.
+
+## Detecção automática de envio (adicionado 2026-07-19)
+
+Em forms embutidos, o site marca "preenchido hoje" **sozinho** quando detecta o envio: o iframe dispara `load` uma vez ao abrir o form e de novo ao navegar para a tela de confirmação pós-envio — o 2º `load` é tratado como envio (`loadCount >= 2` em `ensureIframe`).
+
+**Restrição**: só é confiável em forms de **página única**. Forms com seções (botão "Próxima") recarregam a cada seção e dariam falso positivo. Os 3 forms comuns atuais foram verificados como página única (2026-07-19, ausência de "Próxima" no HTML). Se um form ganhar seções no futuro, o efeito colateral é o aviso sumir cedo demais — o checkbox manual continua existindo como fonte de verdade corrigível.
 
 ## Transformação de URL para embed
 
