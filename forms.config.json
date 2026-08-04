@@ -37,6 +37,42 @@
           "abrirFora": true
         }
       ]
+    },
+    {
+      "id": "bravo",
+      "nome": "Equipe Bravo",
+      "cor": "#9333EA",
+      "forms": [
+        {
+          "titulo": "Subir documentações",
+          "url": "https://docs.google.com/forms/d/1Zq2MxZFJ59lnlQff8wzK0vTa2XpH-rTEcjaJyRLhoHg/viewform",
+          "abrirFora": true
+        }
+      ]
+    },
+    {
+      "id": "alpha",
+      "nome": "Equipe Alpha",
+      "cor": "#0D9488",
+      "forms": [
+        {
+          "titulo": "Subir documentações",
+          "url": "https://docs.google.com/forms/d/1Y1U4RHnpAK_fE1JkWy7FnR2udCg95SkLwNRNn8DO1nE/viewform",
+          "abrirFora": true
+        }
+      ]
+    },
+    {
+      "id": "legacy",
+      "nome": "Equipe Legacy",
+      "cor": "#78716C",
+      "forms": [
+        {
+          "titulo": "Subir documentações",
+          "url": "https://docs.google.com/forms/d/1KEjSDaCihR1t-eAjrBVX9RLMxNaPwwPBJxhJUI6wX70/viewform",
+          "abrirFora": true
+        }
+      ]
     }
   ],
   "formsComuns": [
