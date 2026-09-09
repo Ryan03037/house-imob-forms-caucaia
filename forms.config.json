@@ -1,6 +1,6 @@
 {
-  "_instrucoes": "COMO EDITAR: 1) Troque nomes das equipes e cores se precisar. 2) Em cada form, coloque titulo curto e o link do Google Form (prefira link longo: abra o forms.gle no navegador e copie a URL final, formato docs.google.com/forms/d/e/.../viewform). 3) 'formsComuns' aparecem para todas as equipes. 4) 'abrirFora': true = form abre em nova aba (obrigatorio para forms com upload de arquivo, que exigem login Google e nao funcionam embutidos). 5) 'obrigatorio': true = mostra aviso vermelho no topo ate o corretor enviar o form naquele dia (so usar em forms de pagina unica, sem botao Proxima). 6) Nao mude os 'id' depois que o site estiver publicado. 7) Salve — o site atualiza sozinho, sem mexer no index.html.",
-  "titulo": "Central de Formulários — House Imob Caucaia",
+  "_instrucoes": "O SISTEMA SUBSTITUIU OS FORMULÁRIOS (09/09/2026). O primeiro item da lista leva ao sistema da House: o corretor entra com o usuário e a senha dele e lança coleta, agendamento, visita e documentação lá dentro, além de ver a Oferta ativa e a carteira dele. Os Google Forms abaixo ficam por enquanto SÓ para quem ainda não recebeu o acesso — saem do ar quando todo o time estiver com login. COMO EDITAR: 1) Troque nomes das equipes e cores se precisar. 2) Em cada form, coloque titulo curto e o link. 3) 'formsComuns' aparecem para todas as equipes e vêm primeiro na tela. 4) 'abrirFora': true = abre em nova aba. 5) Nao mude os 'id' depois que o site estiver publicado. 6) Salve — o site atualiza sozinho, sem mexer no index.html.",
+  "titulo": "House Imob Caucaia — Sistema e formulários",
   "equipes": [
     {
       "id": "fenix",
@@ -8,7 +8,7 @@
       "cor": "#E11D48",
       "forms": [
         {
-          "titulo": "Subir documentações",
+          "titulo": "Subir documentações (antigo)",
           "url": "https://docs.google.com/forms/d/e/1FAIpQLSdZJQJHZ0oGYb-0N9ate82pw7t4gjEAdqVNrLXubWdHZ6Lq_A/viewform",
           "abrirFora": true
         }
@@ -20,7 +20,7 @@
       "cor": "#F59E0B",
       "forms": [
         {
-          "titulo": "Subir documentações",
+          "titulo": "Subir documentações (antigo)",
           "url": "https://docs.google.com/forms/d/e/1FAIpQLSfKfChoiIBduEGe878jRpJt6rSu_DHRco9OtiSxgopqPL63xg/viewform",
           "abrirFora": true
         }
@@ -32,7 +32,7 @@
       "cor": "#2563EB",
       "forms": [
         {
-          "titulo": "Subir documentações",
+          "titulo": "Subir documentações (antigo)",
           "url": "https://docs.google.com/forms/d/e/1FAIpQLSeRP7BxaffLkPyJlvB1eQC0m3iBZc6JxZyMRqixe_9HT9np-g/viewform",
           "abrirFora": true
         }
@@ -44,7 +44,7 @@
       "cor": "#9333EA",
       "forms": [
         {
-          "titulo": "Subir documentações",
+          "titulo": "Subir documentações (antigo)",
           "url": "https://docs.google.com/forms/d/1Zq2MxZFJ59lnlQff8wzK0vTa2XpH-rTEcjaJyRLhoHg/viewform",
           "abrirFora": true
         }
@@ -56,7 +56,7 @@
       "cor": "#0D9488",
       "forms": [
         {
-          "titulo": "Subir documentações",
+          "titulo": "Subir documentações (antigo)",
           "url": "https://docs.google.com/forms/d/1Y1U4RHnpAK_fE1JkWy7FnR2udCg95SkLwNRNn8DO1nE/viewform",
           "abrirFora": true
         }
@@ -68,7 +68,7 @@
       "cor": "#78716C",
       "forms": [
         {
-          "titulo": "Subir documentações",
+          "titulo": "Subir documentações (antigo)",
           "url": "https://docs.google.com/forms/d/1KEjSDaCihR1t-eAjrBVX9RLMxNaPwwPBJxhJUI6wX70/viewform",
           "abrirFora": true
         }
@@ -77,16 +77,21 @@
   ],
   "formsComuns": [
     {
-      "titulo": "Coleta de resultados diários",
+      "titulo": "🏠 ENTRAR NO SISTEMA — coleta, visita, agendamento e docs",
+      "url": "https://house-imob-dashboard.vercel.app/login",
+      "abrirFora": true
+    },
+    {
+      "titulo": "Coleta de resultados diários (antigo)",
       "url": "https://docs.google.com/forms/d/e/1FAIpQLSfzh3cUZyiBFmgftgSYeMGBvxomnHYM4bEINlfKc6mmS0L4Ng/viewform",
       "obrigatorio": true
     },
     {
-      "titulo": "Ficha de agendamentos",
+      "titulo": "Ficha de agendamentos (antigo)",
       "url": "https://docs.google.com/forms/d/e/1FAIpQLSdaMBT-sFlIib3V8SH1SS_urn7UE5ytp80QIt85bAnV2f4JQA/viewform"
     },
     {
-      "titulo": "Ficha de visita",
+      "titulo": "Ficha de visita (antigo)",
       "url": "https://docs.google.com/forms/d/e/1FAIpQLScLivI_C9Y2hIWmsEuGrDAfyftTBEtR9Ec372BdDifup-lVIw/viewform"
     }
   ]
