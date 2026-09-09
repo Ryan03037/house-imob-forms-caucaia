@@ -1,48 +1,104 @@
 {
-  "_instrucoes": "OS GOOGLE FORMS SAÍRAM (09/09/2026). Tudo que era formulário — coleta diária, agendamento, visita e documentação — agora se lança DENTRO do sistema, e lá o corretor ainda tem a Oferta ativa e a carteira dele. Esta página virou só a porta de entrada. Cada corretor entra com o usuário e a senha dele; quem não souber, pede ao gerente. COMO EDITAR: 'formsComuns' aparecem para todas as equipes e vêm primeiro na tela; cada item tem titulo, url e 'abrirFora' (true abre em nova aba). Nao mude os 'id' das equipes. Salve — o site atualiza sozinho, sem mexer no index.html.",
-  "titulo": "House Imob Caucaia",
+  "_instrucoes": "MESMAS OPÇÕES DE SEMPRE, TODAS DENTRO DO SISTEMA (09/09/2026). Os Google Forms saíram; cada item leva à tela equivalente do sistema, onde o lançamento cai direto no painel em vez de esperar o sync da planilha. Quem abrir sem estar logado cai no login e volta PRA TELA QUE CLICOU — não precisa escolher duas vezes. O corretor entra com o usuário e a senha dele; quem não souber, pede ao gerente. COMO EDITAR: 'formsComuns' aparecem para todas as equipes e vêm primeiro; cada item tem titulo, url e 'abrirFora' (deixe true: o sistema não funciona embutido em iframe). Nao mude os 'id' das equipes. Salve — o site atualiza sozinho, sem mexer no index.html.",
+  "titulo": "House Imob Caucaia — Central",
   "equipes": [
     {
       "id": "fenix",
       "nome": "Equipe Fênix",
       "cor": "#E11D48",
-      "forms": []
+      "forms": [
+        {
+          "titulo": "Subir documentações",
+          "url": "https://house-imob-dashboard.vercel.app/f/ficha",
+          "abrirFora": true
+        }
+      ]
     },
     {
       "id": "falcon",
       "nome": "Equipe Falcon",
       "cor": "#F59E0B",
-      "forms": []
+      "forms": [
+        {
+          "titulo": "Subir documentações",
+          "url": "https://house-imob-dashboard.vercel.app/f/ficha",
+          "abrirFora": true
+        }
+      ]
     },
     {
       "id": "aguias",
       "nome": "Equipe Águias",
       "cor": "#2563EB",
-      "forms": []
+      "forms": [
+        {
+          "titulo": "Subir documentações",
+          "url": "https://house-imob-dashboard.vercel.app/f/ficha",
+          "abrirFora": true
+        }
+      ]
     },
     {
       "id": "bravo",
       "nome": "Equipe Bravo",
       "cor": "#9333EA",
-      "forms": []
+      "forms": [
+        {
+          "titulo": "Subir documentações",
+          "url": "https://house-imob-dashboard.vercel.app/f/ficha",
+          "abrirFora": true
+        }
+      ]
     },
     {
       "id": "alpha",
       "nome": "Equipe Alpha",
       "cor": "#0D9488",
-      "forms": []
+      "forms": [
+        {
+          "titulo": "Subir documentações",
+          "url": "https://house-imob-dashboard.vercel.app/f/ficha",
+          "abrirFora": true
+        }
+      ]
     },
     {
       "id": "legacy",
       "nome": "Equipe Legacy",
       "cor": "#78716C",
-      "forms": []
+      "forms": [
+        {
+          "titulo": "Subir documentações",
+          "url": "https://house-imob-dashboard.vercel.app/f/ficha",
+          "abrirFora": true
+        }
+      ]
     }
   ],
   "formsComuns": [
     {
-      "titulo": "🏠 ENTRAR NO SISTEMA",
-      "url": "https://house-imob-dashboard.vercel.app/login",
+      "titulo": "Coleta de resultados diários",
+      "url": "https://house-imob-dashboard.vercel.app/f/coleta",
+      "abrirFora": true
+    },
+    {
+      "titulo": "Ficha de agendamentos",
+      "url": "https://house-imob-dashboard.vercel.app/f/agendamento",
+      "abrirFora": true
+    },
+    {
+      "titulo": "Ficha de visita",
+      "url": "https://house-imob-dashboard.vercel.app/f/visita",
+      "abrirFora": true
+    },
+    {
+      "titulo": "📞 Oferta ativa — ligar para os leads",
+      "url": "https://house-imob-dashboard.vercel.app/f/leads",
+      "abrirFora": true
+    },
+    {
+      "titulo": "📇 Minha carteira",
+      "url": "https://house-imob-dashboard.vercel.app/f/fila",
       "abrirFora": true
     }
   ]
