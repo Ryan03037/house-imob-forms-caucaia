@@ -9,7 +9,7 @@
       "forms": [
         {
           "titulo": "Subir documentações",
-          "url": "https://house-imob-dashboard.vercel.app/f/ficha",
+          "url": "https://caucaia.75-119-145-57.sslip.io/f/ficha",
           "abrirFora": true
         }
       ]
@@ -21,7 +21,7 @@
       "forms": [
         {
           "titulo": "Subir documentações",
-          "url": "https://house-imob-dashboard.vercel.app/f/ficha",
+          "url": "https://caucaia.75-119-145-57.sslip.io/f/ficha",
           "abrirFora": true
         }
       ]
@@ -33,7 +33,7 @@
       "forms": [
         {
           "titulo": "Subir documentações",
-          "url": "https://house-imob-dashboard.vercel.app/f/ficha",
+          "url": "https://caucaia.75-119-145-57.sslip.io/f/ficha",
           "abrirFora": true
         }
       ]
@@ -45,7 +45,7 @@
       "forms": [
         {
           "titulo": "Subir documentações",
-          "url": "https://house-imob-dashboard.vercel.app/f/ficha",
+          "url": "https://caucaia.75-119-145-57.sslip.io/f/ficha",
           "abrirFora": true
         }
       ]
@@ -57,7 +57,7 @@
       "forms": [
         {
           "titulo": "Subir documentações",
-          "url": "https://house-imob-dashboard.vercel.app/f/ficha",
+          "url": "https://caucaia.75-119-145-57.sslip.io/f/ficha",
           "abrirFora": true
         }
       ]
@@ -69,7 +69,7 @@
       "forms": [
         {
           "titulo": "Subir documentações",
-          "url": "https://house-imob-dashboard.vercel.app/f/ficha",
+          "url": "https://caucaia.75-119-145-57.sslip.io/f/ficha",
           "abrirFora": true
         }
       ]
@@ -78,27 +78,27 @@
   "formsComuns": [
     {
       "titulo": "Coleta de resultados diários",
-      "url": "https://house-imob-dashboard.vercel.app/f/coleta",
+      "url": "https://caucaia.75-119-145-57.sslip.io/f/coleta",
       "abrirFora": true
     },
     {
       "titulo": "Ficha de agendamentos",
-      "url": "https://house-imob-dashboard.vercel.app/f/agendamento",
+      "url": "https://caucaia.75-119-145-57.sslip.io/f/agendamento",
       "abrirFora": true
     },
     {
       "titulo": "Ficha de visita",
-      "url": "https://house-imob-dashboard.vercel.app/f/visita",
+      "url": "https://caucaia.75-119-145-57.sslip.io/f/visita",
       "abrirFora": true
     },
     {
       "titulo": "📞 Oferta ativa — ligar para os leads",
-      "url": "https://house-imob-dashboard.vercel.app/f/leads",
+      "url": "https://caucaia.75-119-145-57.sslip.io/f/leads",
       "abrirFora": true
     },
     {
       "titulo": "📇 Minha carteira",
-      "url": "https://house-imob-dashboard.vercel.app/f/fila",
+      "url": "https://caucaia.75-119-145-57.sslip.io/f/fila",
       "abrirFora": true
     }
   ]
